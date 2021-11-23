@@ -1,8 +1,15 @@
-import React from "react"
+import React, {useState} from "react"
 import "./mystyles.scss"
 import { StaticImage } from "gatsby-plugin-image"
 
 const IndexPage = () => {
+ 
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+  function print () {
+    console.log(email)
+    console.log(password)
+  }
   return (
     <><nav class="navbar is-black" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
@@ -33,11 +40,11 @@ const IndexPage = () => {
                 <form action="" class="box">
                   <div class="field">
                     <label for="" class="label">Email</label>
-                      <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required />
+                      <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" onChange={event=>setEmail(event.target.value)} />
                   </div>
                   <div class="field">
                     <label for="" class="label">Password</label>
-                      <input type="password" placeholder="*******" class="input" required />
+                      <input type="password" placeholder="*******" class="input" onChange={event=>setPassword(event.target.value)}  />
                   </div>
                   <div class="field">
                     <label for="" class="checkbox">
@@ -46,7 +53,7 @@ const IndexPage = () => {
                     </label>
                   </div>
                   <div class="field">
-                    <button class="button is-warning">
+                    <button class="button is-warning" onClick={()=>print()}>
                       Login
                     </button>
                   </div>
