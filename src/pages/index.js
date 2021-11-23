@@ -40,11 +40,11 @@ const IndexPage = () => {
                 <form action="" class="box">
                   <div class="field">
                     <label for="" class="label">Email</label>
-                      <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" onChange={event=>setEmail(event.target.value)} />
+                      <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" onChange={event=>setEmail(event.target.value)} required />
                   </div>
                   <div class="field">
                     <label for="" class="label">Password</label>
-                      <input type="password" placeholder="*******" class="input" onChange={event=>setPassword(event.target.value)}  />
+                      <input type="password" placeholder="*******" class="input" onChange={event=>setPassword(event.target.value)} required />
                   </div>
                   <div class="field">
                     <label for="" class="checkbox">
