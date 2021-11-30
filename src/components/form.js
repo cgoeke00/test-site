@@ -26,8 +26,11 @@ const Form = () => {
         invitesError:"",
         reminderError:"",
         votesPerSlotError:"",
-        voterPerVoterError:"",  
+        votesPerSlotError2:"",
+        voterPerVoterError:"",
+        voterPerVoterError2:"",  
         deadlineError:"",
+        deadlineFormatError:"",
     })
     const [status, setStatus] = React.useState(0)
     const radioHandler = (status) => {
@@ -61,8 +64,11 @@ const Form = () => {
         let invitesError= "";
         let reminderError="";
         let votesPerSlotError ="";
+        let votesPerSlotError2 ="";
         let voterPerVoterError= "";  
+        let voterPerVoterError2= "";  
         let deadlineError ="";
+        let deadlineFormatError="";
         if(!formState.title){
             titleError = "title cannot be empty"
         }
@@ -87,14 +93,20 @@ const Form = () => {
         if(formState.zone == ''){
             zoneError = "Please select a Zone"
         }
-        if(!formState.slots){
-            slotsError = "Please enter a slot number"
+        if(/^([1-9][0-9]{0,2}|1000)$/.test(formState.slots)==false){
+            slotsError = "Please enter a slot number (1-999)"
         }
-        if((formState.votesPerSlot == "" && status == 1) || status == 0){
+        if(formState.votesPerSlot == "" && status == 1){
             votesPerSlotError = "Please enter a number"
         }
-        if((formState.voterPerVoter == "" && status2 == 1)|| status2 == 0){
+        if(status == 0){
+            votesPerSlotError2 = "Select an option"
+        }
+        if(formState.voterPerVoter == "" && status2 == 1){
             voterPerVoterError = "Please enter a number"
+        }
+        if(status2 == 0){
+            voterPerVoterError2 = "Select an option"
         }
         if(!formState.invites){
             invitesError = "Select an option"
@@ -102,13 +114,16 @@ const Form = () => {
         if(!formState.reminder){
             reminderError = "Select an option"
         }
-        if((formState.deadline == "" && status3 == 1) || status3 == 0){
-            deadlineError = "Please enter in a deadline"
+        if(formState.deadline == ""  && status3 == 0){
+            deadlineError = "Please select an option"
         }
-        if(titleError || datesError || datesFormatError || startError || endError || zoneError || votesPerSlotError || voterPerVoterError || deadlineError || invitesError || reminderError){
+        if(/^([1-9]|([012][0-9])|(3[01]))\-([0]{0,1}[1-9]|1[012])\-\d\d\d\d\s([0-1]?[0-9]|2?[0-3]):([0-5]\d)$/.test(formState.deadline) == false && status3 == 1){
+            deadlineFormatError = "Invalid format for deadline"
+        }
+        if(titleError || datesError || datesFormatError || startError || endError || slotsError || zoneError || votesPerSlotError || voterPerVoterError || deadlineError || invitesError || reminderError || deadlineFormatError || votesPerSlotError2 || voterPerVoterError2){
             setFormState({
                 ...formState,
-                titleError,datesError,datesFormatError,startError,endError,zoneError,votesPerSlotError,voterPerVoterError,invitesError,reminderError,deadlineError
+                titleError,datesError,datesFormatError,startError,endError,zoneError,slotsError,votesPerSlotError,voterPerVoterError,invitesError,reminderError,deadlineError,deadlineFormatError,votesPerSlotError2,voterPerVoterError2
             })
             return false
         }
@@ -129,8 +144,11 @@ const Form = () => {
             formState.invitesError=""
             formState.reminderError=""
             formState.votesPerSlotError=""
+            formState.votesPerSlotError2=""
             formState.voterPerVoterError=""
+            formState.voterPerVoterError2=""
             formState.deadlineError=""
+            formState.deadlineFormatError=""
             setFormState({
                 ...formState
             })
@@ -138,6 +156,7 @@ const Form = () => {
         else{
             console.log("Invalid")
         }
+        
     }
 
     return(
@@ -214,6 +233,7 @@ const Form = () => {
         </div>
         <div class="field">
         <label class="label">Votes per Slot</label>
+        <div style ={{fontSize:12, color:"red"}}>{formState.votesPerSlotError2}</div>
             <div class="control">
                 <label class="radio mr-4">
                     <input type="radio" name="Restrict" checked={status === 1} onClick={(e) => radioHandler(1)} />
@@ -235,6 +255,7 @@ const Form = () => {
         </div>
         <div class="field">
         <label class="label">Votes per Voter</label>
+        <div style ={{fontSize:12, color:"red"}}>{formState.voterPerVoterError2}</div>
             <div class="control">
                 <label class="radio mr-4">
                     <input type="radio" name="Restrict2" checked={status2 === 1} onClick={(e) => radioHandler2(1)}/>
@@ -285,6 +306,7 @@ const Form = () => {
         <div class="field">
         <label class="label">Set Deadline</label>
             <div class="control">
+            <div style ={{fontSize:12, color:"red"}}>{formState.deadlineError}</div>
                 <label class="radio mr-6">
                     <input type="radio" name="set" checked={status3 === 1} onClick={(e) => radioHandler3(1)}/>
                         Yes
@@ -297,8 +319,8 @@ const Form = () => {
             {status3 === 1 && (<div class="field">
             <label class="label">Deadline by
                 <div class="control">
-                    <input class="input" name="deadline" type="text" placeholder="DD-MM-YYYY:hh-mm" onChange={handleChange} value={formState.deadline}/>
-                    <div style ={{fontSize:12, color:"red"}}>{formState.deadlineError}</div>
+                    <input class="input" name="deadlinedate" type="text" placeholder="DD-MM-YYYY hh:mm" onChange={handleChange} value={formState.deadline}/>
+                    <div style ={{fontSize:12, color:"red"}}>{formState.deadlineFormatError}</div>
                 </div>
             </label>
         </div>)}

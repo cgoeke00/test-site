@@ -1,5 +1,6 @@
 import React,{useState}  from 'react'
 import { StaticImage } from "gatsby-plugin-image"
+import { navigate } from "gatsby"
 
 
 const Login = () =>  {
@@ -25,6 +26,9 @@ const Login = () =>  {
     if(!loginState.password){
         passwordError = "Invalid password"
     }
+    if(loginState.email == "abc@aol.com" && loginState.password == 1234){
+        navigate("/admin/")
+    }
     if(emailError || passwordError){
         setLoginstate({
             ...loginState,
@@ -49,6 +53,7 @@ const Login = () =>  {
         }
 
     }
+    
     
     return (
         
@@ -76,7 +81,7 @@ const Login = () =>  {
                                     <div style ={{fontSize:20, color:"red"}}>{loginState.passwordError}</div>
                                 </div>
                             </div>
-                            <button class="button is-block is-info is-large is-fullwidth is-warning" onClick={handleSubmit}>Login</button>
+                            <button class= "button is-block is-info is-large is-fullwidth is-warning"  onClick={handleSubmit}>Login</button>
                         </div>
                     </div>
                 </div>
