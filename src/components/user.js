@@ -1,5 +1,6 @@
 import React,{useState}  from 'react'
-import { StaticImage } from "gatsby-plugin-image"
+
+
 
 const User = () => {
     const [submitstate,setSubmitState] = useState({
@@ -13,6 +14,10 @@ const User = () => {
 
 
     })
+    const [status, setStatus] = React.useState(0)
+    const radioHandler = (status) => {
+        setStatus(status);
+    };
     const handleChange = event => {
         setSubmitState({
             ...submitstate,
@@ -24,21 +29,14 @@ const User = () => {
         let timesFormatError = ""
         let dateError = ""
         let typeErr = ""
-        if(!submitstate.date){
-            dateError ="Dates cannot be empty"
+        if(submitstate.date == ''){
+            dateError ="Please Select a Date"
         }
-        if(submitstate.date){
-            let a = []
-            a = submitstate.date.split(",")
-            for(var i = 0; i<a.length;i++){
-                if(!/^\d{2}([./-])\d{2}\1\d{4}$/.test(a[i])){
-                    dateFormatError = "Invalid format for dates"
-                }
-            }
+        if(submitstate.times == ''){
+            timesFormatError ="Please Select a Time"
         }
-        if(!submitstate.times || /^([01]\d|2[0-3]):([0-5]\d)$/.test(submitstate.start) == false){
-            timesFormatError = "Invlaid format for time"
-        }
+        
+        
         if(!submitstate.type){
             typeErr = "Please select a type"
         }
@@ -72,35 +70,61 @@ const User = () => {
     return (
         <section class="section">
         <h1 class="title">User</h1>
-        <div class="field">
-            <label class="label">Date
+            <div class="field">
+            <label class="label">Date</label>
+                <div style ={{fontSize:12, color:"red"}}>{submitstate.dateError}</div>
+                    <div class="control">
+                        <div class="select">
+                            <select name="zone" onChange={handleChange} value={submitstate.date}>
+                                <option>Select dropdown</option>
+                                <option>CST</option>
+                                <option>EST</option>
+                                <option>PST</option>
+                            </select>
+                        </div>
+                    </div>
+                </div> 
+                <div class="field">
+                <label class="label">Times</label>
+                    <div style ={{fontSize:12, color:"red"}}>{submitstate.timesFormatError}</div>
+                        <div class="control">
+                            <div class="select">
+                                <select name="zone" onChange={handleChange} value={submitstate.times}>
+                                    <option>Select dropdown</option>
+                                    <option>CST</option>
+                                    <option>EST</option>
+                                    <option>PST</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> 
+
+                 <div class="field">
+                <label class="label">Type</label>
+                <div style ={{fontSize:12, color:"red"}}>{submitstate.typeErr}</div>
+                    <div class="control">
+                        <label class="radio mr-4">
+                            <input type="radio" name="Restrict" checked={status === 1} onClick={(e) => radioHandler(1)}/>
+                                Vote
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="Restrict" checked={status === 2} onClick={(e) => radioHandler(2)}/>
+                                Reserve
+                        </label>
+                    </div>
+                 </div> 
+                <div class="field is-grouped">
                 <div class="control">
-                    <input class="input" name="date" type="text" placeholder="Required"  onChange={handleChange} value={submitstate.title}/>
-                    <div style ={{fontSize:12, color:"red"}}>{submitstate.titleError}</div>
+                    <button class="button is-warning" onClick={handleSubmit}>Submit</button>
                 </div>
-            </label>
-        </div>
-        <div class="field">
-            <label class="label">Times
-                <div class="control">
-                    <input class="input" name="times" type="text" placeholder="Required"  onChange={handleChange} value={submitstate.title}/>
-                    <div style ={{fontSize:12, color:"red"}}>{submitstate.titleError}</div>
-                </div>
-            </label>
-        </div>
-
-
-        </section>
-
+            </div>
+         </section>
 
 
 
     )
 
 
-
-
-    }
-
+}
 export default User
 
