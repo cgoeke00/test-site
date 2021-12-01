@@ -36,7 +36,7 @@ const User = () => {
                 }
             }
         }
-        if(!submitstate.times || /^([01]\d|2[0-3]):([0-5]\d)$/.test(formState.start) == false){
+        if(!submitstate.times || /^([01]\d|2[0-3]):([0-5]\d)$/.test(submitstate.start) == false){
             timesFormatError = "Invlaid format for time"
         }
         if(!submitstate.type){
@@ -56,7 +56,7 @@ const User = () => {
         event.preventDefault()
         const isValid = validate();
         if(isValid){
-            console.log(formState)
+            console.log(submitstate)
             submitstate.typeErr=""
             submitstate.dateError=""
             submitstate.dateFormatError=""
@@ -75,16 +75,16 @@ const User = () => {
         <div class="field">
             <label class="label">Date
                 <div class="control">
-                    <input class="input" name="date" type="text" placeholder="Required"  onChange={handleChange} value={formState.title}/>
-                    <div style ={{fontSize:12, color:"red"}}>{formState.titleError}</div>
+                    <input class="input" name="date" type="text" placeholder="Required"  onChange={handleChange} value={submitstate.title}/>
+                    <div style ={{fontSize:12, color:"red"}}>{submitstate.titleError}</div>
                 </div>
             </label>
         </div>
         <div class="field">
             <label class="label">Times
                 <div class="control">
-                    <input class="input" name="times" type="text" placeholder="Required"  onChange={handleChange} value={formState.title}/>
-                    <div style ={{fontSize:12, color:"red"}}>{formState.titleError}</div>
+                    <input class="input" name="times" type="text" placeholder="Required"  onChange={handleChange} value={submitstate.title}/>
+                    <div style ={{fontSize:12, color:"red"}}>{submitstate.titleError}</div>
                 </div>
             </label>
         </div>
