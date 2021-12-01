@@ -2559,7 +2559,7 @@
     "picocolors" "^1.0.0"
     "postcss-value-parser" "^4.1.0"
 
-"aws-sdk@^2.0.9":
+"aws-sdk@^2.0.9", "aws-sdk@^2.479.0":
   "integrity" "sha512-xGKYoVNFA46gphJZ5jRykxT96L3YNMO/STmjdW/cl36n61ENfTvH61OO5v2ReoAoReddAV7F0WMXfkzwjYc5Jw=="
   "resolved" "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.1040.0.tgz"
   "version" "2.1040.0"
@@ -5611,6 +5611,13 @@
     "ws" "^7.3.0"
     "xstate" "^4.9.1"
     "yoga-layout-prebuilt" "^1.9.6"
+
+"gatsby-source-dynamodb@^0.0.2":
+  "integrity" "sha512-n3k9tQP9IN4vn51ZJm/Rqb1WSx26Q8hcf7m1Kl38dBvCY0jdcKQNYahyj/OQuAOD9zcpRU4i0V19SeNIT4rb/w=="
+  "resolved" "https://registry.npmjs.org/gatsby-source-dynamodb/-/gatsby-source-dynamodb-0.0.2.tgz"
+  "version" "0.0.2"
+  dependencies:
+    "aws-sdk" "^2.479.0"
 
 "gatsby-source-filesystem@^4.0.0-next", "gatsby-source-filesystem@^4.1.0":
   "integrity" "sha512-FQJSWdqlsYe1bwtpLb3aXvQnWZWym9VFaWriOnuH+URSdZTjiejSWPrFPd8CcTPWN3EmAWrwR0x27s3VwhlHiQ=="
