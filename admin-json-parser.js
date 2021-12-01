@@ -59,7 +59,10 @@ function deleteFunc(key) {
 
 keysToDelete.forEach(tempJson.deleteFunc());
 
-console.log(dataToItem(tempJson))
+dynamoJson = dataToItem(tempJson);
+dynamoJson["TableName"] = "SeniorDesignLab3DB";
+
+console.log(dynamoJson);
 
 
 toReturn = {
