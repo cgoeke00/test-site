@@ -44,6 +44,20 @@ tempJson = {
 }
 
 
+keysToDelete = ["titleError", "datesError", "datesFormatError", "startError",
+ "endError", "startEndError", "zoneError", "slotsError", "slotsBlockError",
+  "slotsTimeError", "invitesError", "reminderError", "votesPerSlotError",
+   "votesPerSlotError2", "voterPerVoterError", "voterPerVoterError2", "deadlineError", "deadlineFormatError"]
+
+function deleteFunc(key) {
+    if(this.hasKey(key)) {
+       delete this.container[key];
+       return true;
+    }
+    return false;
+ }
+
+keysToDelete.forEach(tempJson.deleteFunc());
 
 console.log(dataToItem(tempJson))
 
