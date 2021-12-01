@@ -68,8 +68,10 @@ const User = () => {
         }
     }
     return (
+        <div class="container has-text-centered">
         <section class="section">
         <h1 class="title">User</h1>
+        
             <div class="field">
             <label class="label">Date</label>
                 <div style ={{fontSize:12, color:"red"}}>{submitstate.dateError}</div>
@@ -113,13 +115,16 @@ const User = () => {
                         </label>
                     </div>
                  </div> 
-                <div class="field is-grouped">
-                <div class="control">
-                    <button class="button is-warning" onClick={handleSubmit}>Submit</button>
+                 
+                    <div class="field is-grouped">
+                    <div class="container has-text-centered">
+                    <div class="control">
+                     <button class="button is-warning" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
-         </section>
-
+        </div>
+    </section>
+ </div>
 
 
     )
