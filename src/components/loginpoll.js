@@ -19,7 +19,41 @@ const Loginpoll = () =>  {
     let titleError = "";
 
 
-    //query database with primary key = title
+    //query database with primary key = title ////////////////////////////////////////
+    const AWS = require('aws-sdk');
+
+
+    function createDynamoDbClient() {
+    // Set the region
+    AWS.config.update({
+        accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
+        secretAccessKey: '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',
+        region: 'us-east-1'
+    })
+    return new AWS.DynamoDB();
+    }
+
+
+    function returnData(UniqueTitle){
+
+        const dynamoDB = new AWS.DynamoDB.DocumentClient()
+
+        dynamoDB
+        .get({
+            TableName: "SeniorDesignLab3DB",
+            Key: {
+            'UniqueTitle': UniqueTitle
+            },
+        })
+        .promise()
+        .then(data => console.log(data.Item))
+        .catch(console.error)
+    }
+
+    createDynamoDbClient();
+    var response = returnData('yee')
+    console.log(response)
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
 
     if(true){ // if query is successfull
