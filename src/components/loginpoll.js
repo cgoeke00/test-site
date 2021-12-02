@@ -1,6 +1,8 @@
 import React,{useState}  from 'react'
 import { StaticImage } from "gatsby-plugin-image"
 import { navigate } from "gatsby"
+var dynamoResponse = null
+var dynamoResponseFinal = null
 
 
 const Loginpoll = () =>  {
@@ -36,9 +38,9 @@ const Loginpoll = () =>  {
 
     function returnData(UniqueTitle){
 
-        const dynamoDB = new AWS.DynamoDB.DocumentClient()
+        const documentClient = new AWS.DynamoDB.DocumentClient()
 
-        dynamoDB
+        dynamoResponse = documentClient
         .get({
             TableName: "SeniorDesignLab3DB",
             Key: {
@@ -46,39 +48,42 @@ const Loginpoll = () =>  {
             },
         })
         .promise()
-        .then(data => console.log(data.Item))
+        .then(data => {return data.Item}) 
         .catch(console.error)
     }
 
+
     createDynamoDbClient();
-    var response = returnData(loginState.title)
-    console.log(response)
+    returnData(loginState.title)
+
+    const returnDataHelper = async () => {
+        dynamoResponseFinal = await dynamoResponse;
+        
+        console.log(dynamoResponseFinal)
+
+        if(dynamoResponseFinal != null){ // if query is successfull
+            navigate("/userInterface/", {state: 'data'}) //navigate to page and pass query result @ location.state.data
+        }
+        else {
+            setLoginstate({
+                ...loginState,
+                titleError
+            })
+        }
+    };
+
+    returnDataHelper();
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////
-
-
-    if(response != null ){ // if query is successfull
-        navigate("/userInterface/", {state: response}) //navigate to page and pass query result @ location.state.response
-        return true
-    }
-
-
-    if(titleError){
-        setLoginstate({
-            ...loginState,
-            titleError
-        })
-        return false
-    }
-    return false
-    }
-
+}
 
     
     const handleSubmit = event =>{
     event.preventDefault()
     const isValid = validate();
         if(isValid){
-            //console.log(loginState)
+            console.log(loginState)
             loginState.titleError ="";
             setLoginstate({
                 ...loginState
