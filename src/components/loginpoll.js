@@ -57,10 +57,9 @@ const Loginpoll = () =>  {
 
 
     if(true){ // if query is successfull
-        navigate("/userInterface/", {state: response}) //navigate to page and pass query result @ location.state.data
+        navigate("/userInterface/", {state: response}) //navigate to page and pass query result @ location.state.response
         return true
     }
-
 
 
     if(titleError){
