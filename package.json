@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "aws-sdk": "^2.0.9",
     "bulma": "^0.9.3",
+    "dynamo-converters": "^5.0.4",
     "gatsby": "^4.1.1",
     "gatsby-plugin-gatsby-cloud": "^4.1.0",
     "gatsby-plugin-image": "^2.1.0",
@@ -14,6 +16,7 @@
     "gatsby-plugin-react-helmet": "^5.1.0",
     "gatsby-plugin-sass": "^5.2.0",
     "gatsby-plugin-sharp": "^4.1.0",
+    "gatsby-source-dynamodb": "^0.0.2",
     "gatsby-source-filesystem": "^4.1.0",
     "gatsby-transformer-sharp": "^4.1.0",
     "moment": "^2.29.1",
@@ -24,7 +27,7 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.20.4",
     "sass": "^1.43.4",
-    "aws-sdk": "^2.0.9"
+    "util": "^0.12.4"
   },
   "devDependencies": {
     "prettier": "^2.4.1"
