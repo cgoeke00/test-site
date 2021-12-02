@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { dataToItem, deltaToExpression, itemToData } from 'dynamo-converters';
+import { navigate } from "gatsby"
 
 var formStateDictionary = {};
 var tempDynamoJson = {};
@@ -42,6 +43,8 @@ const Form = () => {
         voterPerVoterError2:"",  
         deadlineError:"",
         deadlineFormatError:"",
+        success:"",
+        
     })
 
     const [status, setStatus] = React.useState(0)
@@ -62,6 +65,14 @@ const Form = () => {
     const [status4, setStatus4] = React.useState(0)
     const radioHandler4 = (status4) => {
         setStatus4(status4);
+    };
+    const [status5, setStatus5] = React.useState(0)
+    const radioHandler5 = (status5) => {
+        setStatus5(status5);
+    };
+    const [status6, setStatus6] = React.useState(0)
+    const radioHandler6 = (status6) => {
+        setStatus6(status6);
     };
 
     const handleChange = event => {
@@ -235,6 +246,7 @@ const Form = () => {
         const isValid = validate();
 
         if(isValid){
+            formState.success = "Success, find you poll at" +formState.title
             
             ////////////////////////////////////////////////////////////////////////////
             for (let [key, value] of Object.entries(formState)) {
@@ -289,9 +301,31 @@ const Form = () => {
             formState.deadlineError=""
             formState.deadlineFormatError=""
             formState.startEndError=""
+            formState.title = ""
+            formState.location=""
+            formState.notes=""
+            formState.dates= ""
+            formState.start=""
+            formState.end= ""
+            formState.zone= ""
+            formState.slotsTime=""
+            formState.slotsBlock=""
+            formState.intervals=""
+            formState.votesPerSlot=""
+            formState.voterPerVoter= "" 
+            formState.invites=""
+            formState.reminder=""
+            formState.deadline= ""
+            setStatus(null)
+            setStatus2(null)
+            setStatus3(null)
+            setStatus4(null)
+            setStatus5(null)
+            setStatus6(null)
             setFormState({
                 ...formState
             })
+            
         }
         else{
             console.log("Invalid")
@@ -479,11 +513,11 @@ const Form = () => {
         <div style ={{fontSize:12, color:"red"}}>{formState.invitesError}</div>
             <div class="control">
                 <label class="radio mr-6">
-                    <input type="radio" name="invites" onChange={handleChange} value="yes"/>
+                    <input type="radio" name="invites"  checked={status5 === 1} onClick={(e) => radioHandler5(1)} onChange={handleChange} value="yes"/>
                         Yes
                 </label>
                 <label class="radio">
-                    <input type="radio" name="invites" onChange={handleChange} value="no"/>
+                    <input type="radio" name="invites" checked={status5 === 2} onClick={(e) => radioHandler5(2)} onChange={handleChange} value="no"/>
                         No
                 </label>
                 </div>
@@ -493,11 +527,11 @@ const Form = () => {
         <div style ={{fontSize:12, color:"red"}}>{formState.reminderError}</div>
             <div class="control">
                 <label class="radio mr-6">
-                    <input type="radio" name="reminder" onChange={handleChange} value="yes"/>
+                    <input type="radio" name="reminder"  checked={status6 === 1} onClick={(e) => radioHandler6(1)} onChange={handleChange} value="yes" />
                         Yes
                 </label>
                 <label class="radio">
-                    <input type="radio" name="reminder" onChange={handleChange} value="no"/>
+                    <input type="radio" name="reminder" checked={status6 === 2} onClick={(e) => radioHandler6(2)} onChange={handleChange} value="no"/>
                         No
                 </label>
                 </div>
@@ -532,6 +566,7 @@ const Form = () => {
                 <button class="button  is-warning is-light">Edit</button>
             </div>
         </div>
+        <div style ={{fontSize:24, color:"blue"}}>{formState.success}</div>
     </section>
     );
 }
