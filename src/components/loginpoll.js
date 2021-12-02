@@ -19,7 +19,8 @@ const Loginpoll = () =>  {
     let titleError = "";
 
 
-    //query database with primary key = title
+    //query database with primary key = loginState.title
+    
 
 
     if(true){ // if query is successfull
