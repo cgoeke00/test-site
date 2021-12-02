@@ -2,7 +2,7 @@ import React,{useState}  from 'react'
 
 
 
-//location.state.data....
+//value, label: location.state.response....
 
 
 const optionsDates = [

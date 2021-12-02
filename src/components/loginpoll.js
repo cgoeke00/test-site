@@ -51,13 +51,13 @@ const Loginpoll = () =>  {
     }
 
     createDynamoDbClient();
-    var response = returnData('yee')
+    var response = returnData(loginState.title)
     console.log(response)
     ///////////////////////////////////////////////////////////////////////////////////////////
 
 
     if(true){ // if query is successfull
-        navigate("/userInterface/", {state: 'data'}) //navigate to page and pass query result @ location.state.data
+        navigate("/userInterface/", {state: response}) //navigate to page and pass query result @ location.state.data
         return true
     }
 
