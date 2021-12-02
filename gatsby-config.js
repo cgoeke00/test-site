@@ -6,8 +6,20 @@ module.exports = {
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-dynamodb',
+      options: {
+        typeName:'dynamo',
+        accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
+        secretAccessKey: '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',
+        region: 'us-east-1',
+        params: {
+          TableName: 'SeniorDesignLab3DB',
+        }
+      }    },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -15,6 +27,7 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {

@@ -1,17 +1,17 @@
 import React from "react"
 import "./mystyles.scss"
 import Header from "../components/header"
-import Login from "../components/login"
+import Loginpoll from "../components/loginpoll"
 
-const IndexPage = () => {
+const Pollloginpage = () => {
  
 
   
   return (
     <><Header></Header>
-    <Login></Login>
+    <Loginpoll></Loginpoll>
     </>
   )
 }
 
-export default IndexPage
+export default Pollloginpage
