@@ -2,6 +2,25 @@ import React,{useState}  from 'react'
 
 
 
+//location.state.data....
+
+
+const optionsDates = [
+    { value: '1', label: '1' },
+    { value: 'yummy', label: 'yummy' },
+    { value: 'red', label: 'red' },
+    { value: 'green', label: 'green' },
+    { value: 'yellow', label: 'yellow' },
+];
+
+const optionsTimes = [
+    { value: '2', label: '2' },
+    { value: 'yummy', label: 'yummy' },
+    { value: 'red', label: 'red' },
+    { value: 'green', label: 'green' },
+    { value: 'yellow', label: 'yellow' },
+];
+
 const User = () => {
     const [submitstate,setSubmitState] = useState({
         date:"",
@@ -92,11 +111,12 @@ const User = () => {
                 <div style ={{fontSize:12, color:"red"}}>{submitstate.dateError}</div>
                     <div class="control">
                         <div class="select">
-                            <select name="zone" onChange={handleChange} value={submitstate.date}>
+                            <select id='1' name="zone" onChange={handleChange} value={submitstate.date}>
                                 <option>Select dropdown</option>
                                 <option>CST</option>
                                 <option>EST</option>
                                 <option>PST</option>
+                                {optionsDates.map(({ value, label }, index) => <option value={value} >{label}</option>)}
                             </select>
                         </div>
                     </div>
@@ -111,6 +131,7 @@ const User = () => {
                                     <option>CST</option>
                                     <option>EST</option>
                                     <option>PST</option>
+                                    {optionsTimes.map(({ value, label }, index) => <option value={value} >{label}</option>)}
                                 </select>
                             </div>
                         </div>
