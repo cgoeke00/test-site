@@ -6,6 +6,17 @@ module.exports = {
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-dynamodb',
+      options: {
+        typeName:'dynamo',
+        accessKeyId: 'AKIARKGGZFBZDY2EGK7Z',
+        secretAccessKey: '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',
+        region: 'us-east-2',
+        params: {
+          TableName: 'polls',
+        }
+      }    },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sass`,
