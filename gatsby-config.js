@@ -10,11 +10,11 @@ module.exports = {
       resolve: 'gatsby-source-dynamodb',
       options: {
         typeName:'dynamo',
-        accessKeyId: 'AKIARKGGZFBZDY2EGK7Z',
-        secretAccessKey: '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',
-        region: 'us-east-2',
+        accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
+        secretAccessKey: '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',
+        region: 'us-east-1',
         params: {
-          TableName: 'polls',
+          TableName: 'SeniorDesignLab3DB',
         }
       }    },
     `gatsby-plugin-react-helmet`,
