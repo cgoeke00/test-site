@@ -3,13 +3,11 @@ import { StaticImage } from "gatsby-plugin-image"
 import { navigate } from "gatsby"
 
 
-const Login = () =>  {
+const Loginpoll = () =>  {
     
     const [loginState,setLoginstate] = useState({
-        email:"",
-        password:"",
-        emailError:"",
-        passwordError:"",
+        title:"",
+        titleError:"",
     })
     const handleChange = event => {
         setLoginstate({
@@ -18,33 +16,37 @@ const Login = () =>  {
         })
     }
     const validate = () =>{
-    let emailError = "";
-    let passwordError = "";
-    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(loginState.email) == false || loginState.email == ""){
-        emailError = "Invalid email"
+    let titleError = "";
+
+
+    //query database with primary key = title
+
+
+    if(true){ // if query is successfull
+        navigate("/userInterface/", {state: 'data'}) //navigate to page and pass query result @ location.state.data
+        return true
     }
-    if(!loginState.password){
-        passwordError = "Invalid password"
-    }
-    if(loginState.email == "abc@aol.com" && loginState.password == 1234){
-        navigate("/admin/")
-    }
-    if(emailError || passwordError){
+
+
+
+    if(titleError){
         setLoginstate({
             ...loginState,
-            emailError,passwordError
+            titleError
         })
         return false
     }
-    return true
+    return false
     }
+
+
+    
     const handleSubmit = event =>{
     event.preventDefault()
     const isValid = validate();
         if(isValid){
             console.log(loginState)
-            loginState.emailError ="";
-            loginState.passwordError="";
+            loginState.titleError ="";
             setLoginstate({
                 ...loginState
             })
@@ -61,7 +63,7 @@ const Login = () =>  {
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <div class="column is-4 is-offset-4">
-                        <h3 class="title has-text-black">Login to Hawkeye Polling</h3>
+                        <h3 class="title has-text-black">User Poll Access</h3>
                         <hr class="login-hr"></hr>
                         <p class="subtitle has-text-black">Go Hawks!</p>
                         <div class="box">
@@ -70,15 +72,8 @@ const Login = () =>  {
                             </figure>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" name="email" type="email" placeholder="Your Email" onChange={handleChange} value={loginState.email}/>  
-                                    <div style ={{fontSize:20, color:"red"}}>{loginState.emailError}</div>  
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" name="password" type="password" placeholder="Your Password" onChange={handleChange} value={loginState.password}/>
-                                    <div style ={{fontSize:20, color:"red"}}>{loginState.passwordError}</div>
+                                    <input class="input is-large" name="title" type="title" placeholder="Enter name of desired poll." onChange={handleChange} value={loginState.title}/>  
+                                    <div style ={{fontSize:20, color:"red"}}>{loginState.titleError}</div>  
                                 </div>
                             </div>
                             <button class= "button is-block is-info is-large is-fullwidth is-warning"  onClick={handleSubmit}>Login</button>
@@ -90,4 +85,4 @@ const Login = () =>  {
         
     )
 }
-export default Login
+export default Loginpoll
