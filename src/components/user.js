@@ -7,6 +7,8 @@ const User = () => {
         date:"",
         times:"",
         type:"",
+        name: "",
+        nameError: "",
         dateFormatError:"",
         dateError: "",                       
         timesFormatError:"", 
@@ -29,21 +31,25 @@ const User = () => {
         let timesFormatError = ""
         let dateError = ""
         let typeErr = ""
+        let nameError = ""
         if(submitstate.date == ''){
             dateError ="Please Select a Date"
         }
         if(submitstate.times == ''){
             timesFormatError ="Please Select a Time"
         }
+        if(submitstate.name == ''){
+            nameError = "Please Enter Name"
+        }
         
         
         if(!submitstate.type){
             typeErr = "Please select a type"
         }
-        if(typeErr || timesFormatError || dateError || dateFormatError ){
+        if(typeErr || timesFormatError || dateError || nameError ){
             setSubmitState({
                 ...submitstate,
-                dateError,dateFormatError, typeErr, timesFormatError 
+                dateError, typeErr, timesFormatError 
             })
             return false
         }
@@ -58,6 +64,7 @@ const User = () => {
             submitstate.typeErr=""
             submitstate.dateError=""
             submitstate.dateFormatError=""
+            submitstate.nameError=""
             
             setSubmitState({
                 ...submitstate
@@ -72,6 +79,14 @@ const User = () => {
         <section class="section">
         <h1 class="title">User</h1>
         
+            <div class="field">
+                <label class="label">Name
+                    <div class="control">
+                        <input class="input" name="name" type="text" placeholder="Required"  onChange={handleChange} value={submitstate.name}/>
+                        <div style ={{fontSize:12, color:"red"}}>{submitstate.nameError}</div>
+                    </div>
+                </label>
+            </div>
             <div class="field">
             <label class="label">Date</label>
                 <div style ={{fontSize:12, color:"red"}}>{submitstate.dateError}</div>
