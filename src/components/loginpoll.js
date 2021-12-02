@@ -23,8 +23,7 @@ const Loginpoll = () =>  {
 
 
     if(true){ // if query is successfull
-        navigate("/userInterface/", {state: 'data'}) //navigate to page
-
+        navigate("/userInterface/", {state: 'data'}) //navigate to page and pass query result @ location.state.data
         return true
     }
 
