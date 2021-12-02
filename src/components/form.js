@@ -237,22 +237,27 @@ const Form = () => {
         if(isValid){
             
             ////////////////////////////////////////////////////////////////////////////
-            for (const [key, value] of Object.entries(formState)) {
+            for (let [key, value] of Object.entries(formState)) {
                 console.log(key, value);
                 formStateDictionary[key] = value
               }
 
             formStateDictionary["UniqueTitle"] = formStateDictionary["title"]
-            tempDynamoJson = dataToItem(formStateDictionary);
-
-            // var keysToDelete = ["titleError", "datesError", "datesFormatError", "startError",
-            // "endError", "startEndError", "zoneError", "slotsError", "slotsBlockError",
-            //  "slotsTimeError", "invitesError", "reminderError", "votesPerSlotError",
-            //   "votesPerSlotError2", "voterPerVoterError", "voterPerVoterError2", "deadlineError", "deadlineFormatError"]
+            
+            
+            var keysToDelete = ["titleError", "datesError", "datesFormatError", "startError",
+            "endError", "startEndError", "zoneError", "slotsError", "slotsBlockError",
+             "slotsTimeError", "invitesError", "reminderError", "votesPerSlotError",
+              "votesPerSlotError2", "voterPerVoterError", "voterPerVoterError2", "deadlineError", "deadlineFormatError"]
               
-            // keysToDelete.forEach(tempDynamoJson.deleteFunc());
+              
+            for (let key in formStateDictionary) {
+                if(keysToDelete.includes(key)) {
+                    delete formStateDictionary[key];
+                 }
+            }
 
-
+            tempDynamoJson = dataToItem(formStateDictionary);
             dynamoJson["TableName"] = "SeniorDesignLab3DB";
             dynamoJson["Item"] = tempDynamoJson;
 
@@ -658,11 +663,3 @@ function handleCommonErrors(err) {
       return;
   }
 }
-
-// function deleteFunc(key) {
-//     if(this.hasKey(key)) {
-//        delete this.container[key];
-//        return true;
-//     }
-//     return false;
-//  }
