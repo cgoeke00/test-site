@@ -62,7 +62,8 @@ const Loginpoll = () =>  {
         console.log(dynamoResponseFinal)
 
         if(dynamoResponseFinal != null){ // if query is successfull
-            navigate("/userInterface/", {state: 'data'}) //navigate to page and pass query result @ location.state.data
+            localStorage["dynamoResponse"] = JSON.stringify(dynamoResponseFinal)
+            navigate("/userInterface/", {state: {dynamoResponseFinal}}) //navigate to page and pass query result @ location.state.data
         }
         else {
             setLoginstate({
