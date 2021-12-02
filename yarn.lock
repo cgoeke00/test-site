@@ -2559,16 +2559,12 @@
     "picocolors" "^1.0.0"
     "postcss-value-parser" "^4.1.0"
 
-<<<<<<< HEAD
 "available-typed-arrays@^1.0.5":
   "integrity" "sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw=="
   "resolved" "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   "version" "1.0.5"
 
-"aws-sdk@^2.0.9":
-=======
 "aws-sdk@^2.0.9", "aws-sdk@^2.479.0":
->>>>>>> 5e39aa04a0f5be1e8b3cd63ab468596699bc2474
   "integrity" "sha512-xGKYoVNFA46gphJZ5jRykxT96L3YNMO/STmjdW/cl36n61ENfTvH61OO5v2ReoAoReddAV7F0WMXfkzwjYc5Jw=="
   "resolved" "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.1040.0.tgz"
   "version" "2.1040.0"
