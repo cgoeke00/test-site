@@ -17,9 +17,19 @@ const Loginpoll = () =>  {
     }
     const validate = () =>{
     let titleError = "";
-    if(loginState.title == "abc@aol.com"){
-        navigate("/admin/")
+
+
+    //query database with primary key = title
+
+
+    if(true){ // if query is successfull
+        navigate("/userInterface/", {state: 'data'}) //navigate to page
+
+        return true
     }
+
+
+
     if(titleError){
         setLoginstate({
             ...loginState,
@@ -27,8 +37,11 @@ const Loginpoll = () =>  {
         })
         return false
     }
-    return true
+    return false
     }
+
+
+    
     const handleSubmit = event =>{
     event.preventDefault()
     const isValid = validate();
@@ -60,7 +73,7 @@ const Loginpoll = () =>  {
                             </figure>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" name="title" type="title" placeholder="Enter poll title." onChange={handleChange} value={loginState.title}/>  
+                                    <input class="input is-large" name="title" type="title" placeholder="Enter name of desired poll." onChange={handleChange} value={loginState.title}/>  
                                     <div style ={{fontSize:20, color:"red"}}>{loginState.titleError}</div>  
                                 </div>
                             </div>
