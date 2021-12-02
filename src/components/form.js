@@ -257,9 +257,15 @@ const Form = () => {
                  }
             }
 
+            console.log(formStateDictionary);
+
             tempDynamoJson = dataToItem(formStateDictionary);
             dynamoJson["TableName"] = "SeniorDesignLab3DB";
             dynamoJson["Item"] = tempDynamoJson;
+
+            delete dynamoJson["Item"]["modified"];
+            delete dynamoJson["Item"]["created"];
+
 
             console.log(dynamoJson);
 
