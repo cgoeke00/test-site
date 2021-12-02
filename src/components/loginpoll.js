@@ -56,7 +56,7 @@ const Loginpoll = () =>  {
     ///////////////////////////////////////////////////////////////////////////////////////////
 
 
-    if(true){ // if query is successfull
+    if(response != null ){ // if query is successfull
         navigate("/userInterface/", {state: response}) //navigate to page and pass query result @ location.state.response
         return true
     }
@@ -78,7 +78,7 @@ const Loginpoll = () =>  {
     event.preventDefault()
     const isValid = validate();
         if(isValid){
-            console.log(loginState)
+            //console.log(loginState)
             loginState.titleError ="";
             setLoginstate({
                 ...loginState

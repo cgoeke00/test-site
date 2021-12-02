@@ -4,7 +4,6 @@ import React,{useState}  from 'react'
 
 //value, label: location.state.response....
 
-
 const optionsDates = [
     { value: '1', label: '1' },
     { value: 'yummy', label: 'yummy' },
@@ -20,6 +19,17 @@ const optionsTimes = [
     { value: 'green', label: 'green' },
     { value: 'yellow', label: 'yellow' },
 ];
+
+/*
+for(var i = 0; i < location.state.response.dates.length; i++)
+{
+    optionsDates.push({value: location.state.response.dates(i), label: location.state.response.dates(i)})
+}
+
+for(var i = 0; i < location.state.response.intervals.length; i++)
+{
+    optionsTimes.push({value: location.state.response.intervals(i), label: location.state.response.intervals(i)})
+}*/
 
 const User = () => {
     const [submitstate,setSubmitState] = useState({
