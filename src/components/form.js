@@ -3,6 +3,7 @@ import moment from 'moment'
 import { dataToItem, deltaToExpression, itemToData } from 'dynamo-converters';
 
 var formStateDictionary = {};
+var tempDynamoJson = {};
 var dynamoJson = {}
 
 const Form = () => {
@@ -234,6 +235,7 @@ const Form = () => {
         const isValid = validate();
 
         if(isValid){
+            
             ////////////////////////////////////////////////////////////////////////////
             for (const [key, value] of Object.entries(formState)) {
                 console.log(key, value);
@@ -241,8 +243,20 @@ const Form = () => {
               }
 
             formStateDictionary["UniqueTitle"] = formStateDictionary["title"]
-            dynamoJson = dataToItem(formStateDictionary);
+            tempDynamoJson = dataToItem(formStateDictionary);
+
+            // var keysToDelete = ["titleError", "datesError", "datesFormatError", "startError",
+            // "endError", "startEndError", "zoneError", "slotsError", "slotsBlockError",
+            //  "slotsTimeError", "invitesError", "reminderError", "votesPerSlotError",
+            //   "votesPerSlotError2", "voterPerVoterError", "voterPerVoterError2", "deadlineError", "deadlineFormatError"]
+              
+            // keysToDelete.forEach(tempDynamoJson.deleteFunc());
+
+
             dynamoJson["TableName"] = "SeniorDesignLab3DB";
+            dynamoJson["Item"] = tempDynamoJson;
+
+            console.log(dynamoJson);
 
             executePutItem(dynamoDbClient, putItemInput).then(() => {
                 console.info('PutItem API call has been executed.')
@@ -533,15 +547,21 @@ export default Form
 //  aws_access_key_id = YOUR_ACCESS_KEY_ID
 //  aws_secret_access_key = YOUR_SECRET_ACCESS_KEY
 
-const AWS = require('aws-sdk');
+const AWS = require('aws-sdk')
+
+AWS.config.update({
+    accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
+    secretAccessKey: 'AJaB8/T4erwVjJgGYaypk3gn4Dq1YR5B1zWWwtRG',
+    region: 'us-east-1'
+})
 
 // Create the DynamoDB Client with the region you want
 const region = 'us-east-1';
 const dynamoDbClient = createDynamoDbClient(region);
 
 // Create the input for putItem call
-// const putItemInput = createPutItemInput();
-const putItemInput = dynamoJson;
+const putItemInput = createPutItemInput();
+// const putItemInput = dynamoJson;
 
 
  // Call DynamoDB's putItem API
@@ -552,15 +572,15 @@ const putItemInput = dynamoJson;
 
 function createDynamoDbClient(regionName) {
   // Set the region
-  AWS.config.update({region: regionName});
+//   AWS.config.update({region: regionName});
   // Use the following config instead when using DynamoDB Local
-  // AWS.config.update({region: 'localhost', endpoint: 'http://localhost:8000', accessKeyId: 'access_key_id', secretAccessKey: 'secret_access_key'});
+//   AWS.config.update({region: 'localhost', endpoint: 'http://localhost:8000', accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ', secretAccessKey: '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'});
   return new AWS.DynamoDB();
 }
 
-// function createPutItemInput() {
-//   return dynamoJson
-// }
+function createPutItemInput() {
+  return dynamoJson
+}
 
 async function executePutItem(dynamoDbClient, putItemInput) {
   // Call DynamoDB's putItem API
@@ -638,3 +658,11 @@ function handleCommonErrors(err) {
       return;
   }
 }
+
+// function deleteFunc(key) {
+//     if(this.hasKey(key)) {
+//        delete this.container[key];
+//        return true;
+//     }
+//     return false;
+//  }
