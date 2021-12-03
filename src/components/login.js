@@ -1,6 +1,7 @@
 import React,{useState}  from 'react'
 import { StaticImage } from "gatsby-plugin-image"
 import { navigate } from "gatsby"
+import { Link } from "gatsby"
 
 
 const Login = () =>  {
@@ -83,6 +84,7 @@ const Login = () =>  {
                             </div>
                             <button class= "button is-block is-info is-large is-fullwidth is-warning"  onClick={handleSubmit}>Login</button>
                         </div>
+                        <Link to="/pollloginpage/">Link to polling page &rarr;</Link>
                     </div>
                 </div>
             </div>

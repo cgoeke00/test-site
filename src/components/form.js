@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
+import AwsClientHandler from './aws-client-handler';
 import { dataToItem, deltaToExpression, itemToData } from 'dynamo-converters';
+
 
 var formStateDictionary = {};
 var tempDynamoJson = {};
@@ -242,6 +244,35 @@ const Form = () => {
         return true
     }
 
+    const iseExists = () => {
+        let clientHandler = new AwsClientHandler(formState.title)
+        
+        clientHandler.getPollData()
+
+        console.log("Resolved poll Data:")
+        console.log(clientHandler.pollDataResolved)
+
+        if(clientHandler.pollDataResolved != null) {
+            return true
+        }
+        else {
+            return false
+        }
+
+    }
+    const handleEdit = event => {
+        event.preventDefault()
+        const a = iseExists();
+        if(a){
+            let clientHandler = new AwsClientHandler(formState.title)
+            clientHandler.adminUpdateItem(formState)
+            console.log("Updated Poll")
+        }
+        else {
+            console.log("Error: Poll does not exist")
+        }
+    }
+
     const handleSubmit = event => {
         event.preventDefault()
         const isValid = validate();
@@ -339,7 +370,7 @@ const Form = () => {
             
         }
         else{
-            console.log("Invalid")
+            console.log(formState)
             
         }
         
@@ -582,7 +613,7 @@ const Form = () => {
                 <button class="button is-warning" onClick={handleSubmit}>Publish</button>
             </div>
             <div class="control">
-                <button class="button  is-warning is-light">Edit</button>
+                <button class="button  is-warning is-light" onClick={handleEdit}>Edit</button>
             </div>
         </div>
         <div style ={{fontSize:24, color:"blue"}}>{ success }</div>
@@ -609,8 +640,8 @@ export default Form
 const AWS = require('aws-sdk')
 
 AWS.config.update({
-    accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAQAUYDWTWU6XJ2JL7',
+    secretAccessKey: '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',
     region: 'us-east-1'
 })
 
@@ -633,7 +664,7 @@ function createDynamoDbClient(regionName) {
   // Set the region
 //   AWS.config.update({region: regionName});
   // Use the following config instead when using DynamoDB Local
-//   AWS.config.update({region: 'localhost', endpoint: 'http://localhost:8000', accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ', secretAccessKey: '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'});
+//   AWS.config.update({region: 'localhost', endpoint: 'http://localhost:8000', accessKeyId: 'AKIAQAUYDWTWU6XJ2JL7', secretAccessKey: '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'});
   return new AWS.DynamoDB();
 }
 
