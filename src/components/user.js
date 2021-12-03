@@ -26,15 +26,19 @@ if(dynamoString != null){
         optionsDates.push({ value: interval, label: interval})
         }
     }
+
+    var y = dynamoResponse["deadline"]
 }
 else {
   takenDates.push("Fail")
   optionsDates.push("Fail")
+
+  var y = "Fail"
 }
 
 
 
-var y = dynamoResponse["deadline"]
+
 //var y = ('2021-12-03 10:57:30')
 var flag = 0
 function getDateTime() {
