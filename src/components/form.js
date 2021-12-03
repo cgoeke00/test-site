@@ -42,6 +42,8 @@ const Form = () => {
         voterPerVoterError2:"",  
         deadlineError:"",
         deadlineFormatError:"",
+        invite:"",
+        inviteError:"",
     })
 
     const [status, setStatus] = React.useState(0)
@@ -62,6 +64,11 @@ const Form = () => {
     const [status4, setStatus4] = React.useState(0)
     const radioHandler4 = (status4) => {
         setStatus4(status4);
+    };
+
+    const [status9, setStatus9] = React.useState(0)
+    const radioHandler9 = (status9) => {
+        setStatus9(status9);
     };
 
     const handleChange = event => {
@@ -147,7 +154,7 @@ const Form = () => {
             voterPerVoterError2 = "Select an option"
         }
 
-        if(!formState.invites){
+        if(status9 == 0){
             invitesError = "Select an option"
         }
 
@@ -235,6 +242,11 @@ const Form = () => {
         const isValid = validate();
 
         if(isValid){
+
+            if(status9 == 1)
+            {
+                window.open('mailto:' + formState.invite + '?subject=A New Poll Has Been Shared &body=Access it with this title ' + formState.title);
+            }
             
             ////////////////////////////////////////////////////////////////////////////
             for (let [key, value] of Object.entries(formState)) {
@@ -485,14 +497,22 @@ const Form = () => {
         <div style ={{fontSize:12, color:"red"}}>{formState.invitesError}</div>
             <div class="control">
                 <label class="radio mr-6">
-                    <input type="radio" name="invites" onChange={handleChange} value="yes"/>
+                    <input type="radio" name="invites" checked={status9 === 1} onClick={(e) => radioHandler9(1)}/>
                         Yes
                 </label>
                 <label class="radio">
-                    <input type="radio" name="invites" onChange={handleChange} value="no"/>
+                    <input type="radio" name="invites" checked={status9 === 2} onClick={(e) => radioHandler9(2)}/>
                         No
                 </label>
                 </div>
+            {status9 === 1 && (<div class="field">
+            <label class="label">Restrict by
+                <div class="control">
+                    <input class="input" name="invite" type="text" placeholder="Recipient emails seperated by commas" onChange={handleChange} value={formState.invite}/>
+                    <div style ={{fontSize:12, color:"red"}}>{formState.inviteError}</div>
+                </div>
+            </label>
+        </div>)}
         </div>
         <div class="field">
         <label class="label">Send Reminder</label>

@@ -20,6 +20,7 @@
     "gatsby-source-filesystem": "^4.1.0",
     "gatsby-source-mysql": "^2.2.3",
     "gatsby-transformer-sharp": "^4.1.0",
+    "git": "^0.1.5",
     "moment": "^2.29.1",
     "moment-range": "^4.0.2",
     "prop-types": "^15.7.2",
