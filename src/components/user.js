@@ -16,12 +16,15 @@ console.log(dynamoResponse)
 
 const optionsDates = []
 const takenDates = []
-
-for (let userResponse in dynamoResponse["responses"]){
-    console.log(JSON.parse(dynamoResponse["responses"][userResponse])["date"])
-    takenDates.push(JSON.parse(dynamoResponse["responses"][userResponse])["date"])
+if(dynamoString != null){
+  for (let userResponse in dynamoResponse["responses"]){
+      console.log(JSON.parse(dynamoResponse["responses"][userResponse])["date"])
+      takenDates.push(JSON.parse(dynamoResponse["responses"][userResponse])["date"])
+    }
 }
-
+else {
+  takenDates.push("Fail")
+}
 for (let [key, interval] of Object.entries(dynamoResponse["intervals"])) {
     if (!(takenDates.includes(interval))){
     optionsDates.push({ value: interval, label: interval})
