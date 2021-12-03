@@ -6,7 +6,7 @@ if (typeof window !== 'undefined') {
 }
 else
 {
-    var dynamoString = ''
+    var dynamoString = null
 }
 
 var dynamoResponse = JSON.parse(dynamoString)
