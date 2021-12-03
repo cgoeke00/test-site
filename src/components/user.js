@@ -252,8 +252,8 @@ const dynamoDbClient = createDynamoDbClient(region);
 
 function createDynamoDbClient() {
     AWS.config.update({
-        accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
-        secretAccessKey: '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',
+        accessKeyId: 'AKIAQAUYDWTWU6XJ2JL7',
+        secretAccessKey: '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',
         region: 'us-east-1'
     })
   // Use the following config instead when using DynamoDB Local
