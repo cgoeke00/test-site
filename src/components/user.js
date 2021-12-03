@@ -1,6 +1,10 @@
 import React,{useState}  from 'react'
 
-
+var success;
+var y;
+var title;
+var notes;
+var location;
 if (typeof window !== 'undefined') {
     var dynamoString = localStorage["dynamoResponse"]
 }
@@ -26,15 +30,24 @@ if(dynamoString != null){
         optionsDates.push({ value: interval, label: interval})
         }
     }
+     y = dynamoResponse["deadline"]
+     title = dynamoResponse["UniqueTitle"]
+     location = dynamoResponse["location"]
+     notes = dynamoResponse["notes"]
 }
 else {
   takenDates.push("Fail")
   optionsDates.push("Fail")
+   y = ""
+   title = ""
+   location = ""
+   notes = ""
 }
 
 
 
-var y = dynamoResponse["deadline"]
+
+
 //var y = ('2021-12-03 10:57:30')
 var flag = 0
 function getDateTime() {
@@ -124,8 +137,9 @@ const User = () => {
         event.preventDefault()
         const isValid = validate();
         if(isValid){
-            
-            
+
+            success = "Confirmed for: \n Title = " + title + " \n , Location = " + location + " \n , Notes = " + notes + " \n , Time = " + submitstate.date + " \n , Name = " + submitstate.name 
+
             console.log(submitstate)
 
             delete submitstate.typeErr
@@ -202,6 +216,7 @@ const User = () => {
                             </div>
                         </div>
                     </form>
+                    <p> { success }</p>
             </section>
         </div>
 
