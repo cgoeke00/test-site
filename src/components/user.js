@@ -11,9 +11,49 @@ console.log(dynamoResponse)
 const optionsDates = []
 for (let [key, interval] of Object.entries(dynamoResponse["intervals"])) {
     optionsDates.push({ value: interval, label: interval})
-  }
+}
+console.log(dynamoResponse["deadline"])
 
 
+var y = dynamoResponse["deadline"]
+var flag = 0
+function getDateTime() {
+    var now     = new Date(); 
+    var year    = now.getFullYear();
+    var month   = now.getMonth()+1; 
+    var day     = now.getDate();
+    var hour    = now.getHours();
+    var minute  = now.getMinutes();
+    var second  = now.getSeconds(); 
+    if(month.toString().length == 1) {
+        month = '0'+month;
+    }
+    if(day.toString().length == 1) {
+         day = '0'+day;
+    }   
+    if(hour.toString().length == 1) {
+         hour = '0'+hour;
+    }
+    if(minute.toString().length == 1) {
+         minute = '0'+minute;
+    }
+    if(second.toString().length == 1) {
+         second = '0'+second;
+    }   
+    var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;   
+      return dateTime;
+    }
+    setInterval(function(){
+        var currentTime = getDateTime();
+        //console.log(currentTime)
+        if(currentTime.localeCompare(y) == 0){
+            flag = 1
+            document.getElementById("button").disabled = true;
+        }
+    }, 1000);
+
+
+//console.log(console.log(new Date().toLocaleString().replace(',','')))
 const User = () => {
     const [submitstate,setSubmitState] = useState({
         date:"",
@@ -64,7 +104,6 @@ const User = () => {
         event.preventDefault()
         const isValid = validate();
         if(isValid){
-            
             
             console.log(submitstate)
 
@@ -130,7 +169,7 @@ const User = () => {
                         <div class="field is-grouped">
                             <div class="container has-text-centered">
                                 <div class="control">
-                                    <button class="button is-warning" onClick={handleSubmit}>Submit</button>
+                                    <button class="button is-warning" id="button" onClick={handleSubmit}>Submit</button>
                                 </div>
                             </div>
                         </div>
