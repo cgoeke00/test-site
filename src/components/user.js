@@ -21,15 +21,57 @@ if(dynamoString != null){
       console.log(JSON.parse(dynamoResponse["responses"][userResponse])["date"])
       takenDates.push(JSON.parse(dynamoResponse["responses"][userResponse])["date"])
     }
+    for (let [key, interval] of Object.entries(dynamoResponse["intervals"])) {
+        if (!(takenDates.includes(interval))){
+        optionsDates.push({ value: interval, label: interval})
+        }
+    }
 }
 else {
   takenDates.push("Fail")
+  optionsDates.push("Fail")
 }
-for (let [key, interval] of Object.entries(dynamoResponse["intervals"])) {
-    if (!(takenDates.includes(interval))){
-    optionsDates.push({ value: interval, label: interval})
+
+
+
+var y = dynamoResponse["deadline"]
+//var y = ('2021-12-03 10:57:30')
+var flag = 0
+function getDateTime() {
+    var now     = new Date(); 
+    var year    = now.getFullYear();
+    var month   = now.getMonth()+1; 
+    var day     = now.getDate();
+    var hour    = now.getHours();
+    var minute  = now.getMinutes();
+    var second  = now.getSeconds(); 
+    if(month.toString().length == 1) {
+        month = '0'+month;
     }
-  }
+    if(day.toString().length == 1) {
+         day = '0'+day;
+    }   
+    if(hour.toString().length == 1) {
+         hour = '0'+hour;
+    }
+    if(minute.toString().length == 1) {
+         minute = '0'+minute;
+    }
+    if(second.toString().length == 1) {
+         second = '0'+second;
+    }   
+    var dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;   
+      return dateTime;
+    }
+    setInterval(function(){
+        var currentTime = getDateTime();
+        //console.log(currentTime)
+        if(currentTime.localeCompare(y) == 0){
+            flag = 1
+            document.getElementById("button").disabled = true;
+        }
+    }, 1000);
+
 
 
 const User = () => {
