@@ -1,8 +1,14 @@
 import React,{useState}  from 'react'
 
 
+if (typeof window !== 'undefined') {
+    var dynamoString = localStorage["dynamoResponse"]
+}
+else
+{
+    var dynamoString = null
+}
 
-var dynamoString = localStorage["dynamoResponse"]
 var dynamoResponse = JSON.parse(dynamoString)
 console.log("test")
 console.log(dynamoResponse)

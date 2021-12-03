@@ -454,11 +454,11 @@ const Form = () => {
             <div class="control">
                 <label class="radio mr-4">
                     <input type="radio" name="Restrict" checked={status === 1} onClick={(e) => radioHandler(1)} />
-                        Restrict
+                        Allow multiple votes
                 </label>
                 <label class="radio">
                     <input type="radio" name="Restrict" checked={status === 2} onClick={(e) => radioHandler(2)}/>
-                        Not
+                        Limit to one vote
                 </label>
                 </div>
                 {status === 1 && (<div class="field">
@@ -476,11 +476,11 @@ const Form = () => {
             <div class="control">
                 <label class="radio mr-4">
                     <input type="radio" name="Restrict2" checked={status2 === 1} onClick={(e) => radioHandler2(1)}/>
-                        Restrict
+                        Allow multiple votes
                 </label>
                 <label class="radio">
                     <input type="radio" name="Restrict2" checked={status2 === 2} onClick={(e) => radioHandler2(2)}/>
-                        Not
+                        Limit to one vote
                 </label>
                 </div>
             {status2 === 1 && (<div class="field">
