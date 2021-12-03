@@ -1,6 +1,8 @@
 import React,{useState}  from 'react'
 import { StaticImage } from "gatsby-plugin-image"
 import { navigate } from "gatsby"
+var dynamoResponse = null
+var dynamoResponseFinal = null
 
 
 const Loginpoll = () =>  {
@@ -19,26 +21,63 @@ const Loginpoll = () =>  {
     let titleError = "";
 
 
-    //query database with primary key = title
+    //query database with primary key = title ////////////////////////////////////////
+    const AWS = require('aws-sdk');
 
 
-    if(true){ // if query is successfull
-        navigate("/userInterface/", {state: 'data'}) //navigate to page and pass query result @ location.state.data
-        return true
+    function createDynamoDbClient() {
+    // Set the region
+    AWS.config.update({
+        accessKeyId: 'AKIAQAUYDWTW6BQE2UFZ',
+        secretAccessKey: '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',
+        region: 'us-east-1'
+    })
+    return new AWS.DynamoDB();
     }
 
 
+    function returnData(UniqueTitle){
 
-    if(titleError){
-        setLoginstate({
-            ...loginState,
-            titleError
+        const documentClient = new AWS.DynamoDB.DocumentClient()
+
+        dynamoResponse = documentClient
+        .get({
+            TableName: "SeniorDesignLab3DB",
+            Key: {
+            'UniqueTitle': UniqueTitle
+            },
         })
-        return false
-    }
-    return false
+        .promise()
+        .then(data => {return data.Item}) 
+        .catch(console.error)
     }
 
+
+    createDynamoDbClient();
+    returnData(loginState.title)
+
+    const returnDataHelper = async () => {
+        dynamoResponseFinal = await dynamoResponse;
+        
+        console.log(dynamoResponseFinal)
+
+        if(dynamoResponseFinal != null){ // if query is successfull
+            localStorage["dynamoResponse"] = JSON.stringify(dynamoResponseFinal)
+            navigate("/userInterface/", {state: {dynamoResponseFinal}}) //navigate to page and pass query result @ location.state.data
+        }
+        else {
+            setLoginstate({
+                ...loginState,
+                titleError
+            })
+        }
+    };
+
+    returnDataHelper();
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+}
 
     
     const handleSubmit = event =>{

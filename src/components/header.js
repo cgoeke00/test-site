@@ -6,7 +6,7 @@ const Header = () => {
   return(
     <nav class="navbar is-black" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
+          <a class="navbar-item" href="/">
             <StaticImage src="../images/Iowa_Hawkeyes_logo.svg.png" width="50" height="28"/>
           </a>
       

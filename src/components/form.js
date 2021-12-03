@@ -5,7 +5,7 @@ import { dataToItem, deltaToExpression, itemToData } from 'dynamo-converters';
 var formStateDictionary = {};
 var tempDynamoJson = {};
 var dynamoJson = {}
-
+var success;
 const Form = () => {
 
     const[formState,setFormState] = React.useState({
@@ -42,6 +42,8 @@ const Form = () => {
         voterPerVoterError2:"",  
         deadlineError:"",
         deadlineFormatError:"",
+        invite:"",
+        inviteError:"",
     })
 
     const [status, setStatus] = React.useState(0)
@@ -62,6 +64,16 @@ const Form = () => {
     const [status4, setStatus4] = React.useState(0)
     const radioHandler4 = (status4) => {
         setStatus4(status4);
+    };
+
+    const [status5, setStatus5] = React.useState(0)
+    const radioHandler5 = (status5) => {
+        setStatus5(status5);
+    };
+
+    const [status9, setStatus9] = React.useState(0)
+    const radioHandler9 = (status9) => {
+        setStatus9(status9);
     };
 
     const handleChange = event => {
@@ -147,7 +159,7 @@ const Form = () => {
             voterPerVoterError2 = "Select an option"
         }
 
-        if(!formState.invites){
+        if(status9 == 0){
             invitesError = "Select an option"
         }
 
@@ -159,7 +171,7 @@ const Form = () => {
             deadlineError = "Please select an option"
         }
 
-        if(/^([1-9]|([012][0-9])|(3[01]))\-([0]{0,1}[1-9]|1[012])\-\d\d\d\d\s([0-1]?[0-9]|2?[0-3]):([0-5]\d)\s?((?:[Aa]|[Pp])\.?[Mm]\.?)$/.test(formState.deadline) == false && status3 == 1){
+        if(/[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]/.test(formState.deadline) == false && status3 == 1){
             deadlineFormatError = "Invalid format for deadline"
         }
         let p = []
@@ -235,6 +247,11 @@ const Form = () => {
         const isValid = validate();
 
         if(isValid){
+            success = "Success, find you poll at " + formState.title
+            if(status9 == 1)
+            {
+                window.open('mailto:' + formState.invite + '?subject=A New Poll Has Been Shared &body=Access it with this title ' + formState.title);
+            }
             
             ////////////////////////////////////////////////////////////////////////////
             for (let [key, value] of Object.entries(formState)) {
@@ -257,9 +274,15 @@ const Form = () => {
                  }
             }
 
+            console.log(formStateDictionary);
+
             tempDynamoJson = dataToItem(formStateDictionary);
             dynamoJson["TableName"] = "SeniorDesignLab3DB";
             dynamoJson["Item"] = tempDynamoJson;
+
+            delete dynamoJson["Item"]["modified"];
+            delete dynamoJson["Item"]["created"];
+
 
             console.log(dynamoJson);
 
@@ -289,9 +312,31 @@ const Form = () => {
             formState.deadlineError=""
             formState.deadlineFormatError=""
             formState.startEndError=""
+            formState.title = ""
+            formState.location=""
+            formState.notes=""
+            formState.dates= ""
+            formState.start=""
+            formState.end= ""
+            formState.zone= ""
+            formState.slotsTime=""
+            formState.slotsBlock=""
+            formState.intervals=""
+            formState.votesPerSlot=""
+            formState.voterPerVoter= "" 
+            formState.invites=""
+            formState.reminder=""
+            formState.deadline= ""
+            setStatus(null)
+            setStatus2(null)
+            setStatus3(null)
+            setStatus4(null)
+            setStatus5(null)
+            setStatus9(null)
             setFormState({
                 ...formState
             })
+            
         }
         else{
             console.log("Invalid")
@@ -436,11 +481,11 @@ const Form = () => {
             <div class="control">
                 <label class="radio mr-4">
                     <input type="radio" name="Restrict" checked={status === 1} onClick={(e) => radioHandler(1)} />
-                        Restrict
+                        Allow multiple votes
                 </label>
                 <label class="radio">
                     <input type="radio" name="Restrict" checked={status === 2} onClick={(e) => radioHandler(2)}/>
-                        Not
+                        Limit to one vote
                 </label>
                 </div>
                 {status === 1 && (<div class="field">
@@ -458,11 +503,11 @@ const Form = () => {
             <div class="control">
                 <label class="radio mr-4">
                     <input type="radio" name="Restrict2" checked={status2 === 1} onClick={(e) => radioHandler2(1)}/>
-                        Restrict
+                        Allow multiple votes
                 </label>
                 <label class="radio">
                     <input type="radio" name="Restrict2" checked={status2 === 2} onClick={(e) => radioHandler2(2)}/>
-                        Not
+                        Limit to one vote
                 </label>
                 </div>
             {status2 === 1 && (<div class="field">
@@ -479,25 +524,33 @@ const Form = () => {
         <div style ={{fontSize:12, color:"red"}}>{formState.invitesError}</div>
             <div class="control">
                 <label class="radio mr-6">
-                    <input type="radio" name="invites" onChange={handleChange} value="yes"/>
+                    <input type="radio" name="invites" checked={status9 === 1} onClick={(e) => radioHandler9(1)}/>
                         Yes
                 </label>
                 <label class="radio">
-                    <input type="radio" name="invites" onChange={handleChange} value="no"/>
+                    <input type="radio" name="invites" checked={status9 === 2} onClick={(e) => radioHandler9(2)}/>
                         No
                 </label>
                 </div>
+            {status9 === 1 && (<div class="field">
+            <label class="label">Restrict by
+                <div class="control">
+                    <input class="input" name="invite" type="text" placeholder="Recipient emails seperated by commas" onChange={handleChange} value={formState.invite}/>
+                    <div style ={{fontSize:12, color:"red"}}>{formState.inviteError}</div>
+                </div>
+            </label>
+        </div>)}
         </div>
         <div class="field">
         <label class="label">Send Reminder</label>
         <div style ={{fontSize:12, color:"red"}}>{formState.reminderError}</div>
             <div class="control">
                 <label class="radio mr-6">
-                    <input type="radio" name="reminder" onChange={handleChange} value="yes"/>
+                    <input type="radio" name="reminder" checked={status5 === 1} onClick={(e) => radioHandler5(1)} onChange={handleChange} value="yes"/>
                         Yes
                 </label>
                 <label class="radio">
-                    <input type="radio" name="reminder" onChange={handleChange} value="no"/>
+                    <input type="radio" name="reminder" checked={status5 === 2} onClick={(e) => radioHandler5(2)} onChange={handleChange} value="no"/>
                         No
                 </label>
                 </div>
@@ -518,7 +571,7 @@ const Form = () => {
             {status3 === 1 && (<div class="field">
             <label class="label">Deadline by
                 <div class="control">
-                    <input class="input" name="deadline" type="text" placeholder="DD-MM-YYYY hh:mm" onChange={handleChange} value={formState.deadline}/>
+                    <input class="input" name="deadline" type="text" placeholder="YYYY-MM-DD hh:mm:ss" onChange={handleChange} value={formState.deadline}/>
                     <div style ={{fontSize:12, color:"red"}}>{formState.deadlineFormatError}</div>
                 </div>
             </label>
@@ -532,6 +585,7 @@ const Form = () => {
                 <button class="button  is-warning is-light">Edit</button>
             </div>
         </div>
+        <div style ={{fontSize:24, color:"blue"}}>{ success }</div>
     </section>
     );
 }
